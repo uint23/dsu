@@ -1,2 +1,2 @@
-dsu! -- OSU! clone for the Nintendo DS  
+### dsu! -- OSU! clone for the Nintendo DS  
 

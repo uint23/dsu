@@ -9,7 +9,7 @@ CFLAGS   = -DARM9 -D__NDS__ -O2 -mcpu=arm946e-s -mtune=arm946e-s -mthumb -mthumb
 		   -fomit-frame-pointer -ffast-math \
 		   -I$(CALICO)/include -I$(LIBNDS)/include -Iinclude
 LDFLAGS  = -T$(CALICO)/lib/ds9.ld -g -mthumb -mthumb-interwork \
-		   -L$(CALICO)/lib -L$(LIBNDS)/lib -lcalico_ds9 -lnds9 -lm
+		   -L$(CALICO)/lib -L$(LIBNDS)/lib -lnds9 -lcalico_ds9 -lm
 DEFAULT_ARM7 = $(CALICO)/bin/ds7_maine.elf
 
 OUT = build/dsu.nds
