@@ -10,7 +10,7 @@ GRIT = $(DEVKITPRO)/tools/bin/grit
 
 ARCH = -mcpu=arm946e-s -mtune=arm946e-s -mthumb -mthumb-interwork
 
-CFLAGS  = -DARM9 -D__NDS__ -O2 -g $(ARCH) \
+CFLAGS  = -DARM9 -D__NDS__ -O2 $(ARCH) \
           -fomit-frame-pointer -ffast-math \
           -I$(CALICO)/include -I$(LIBNDS)/include -Iinclude -Ibuild
 
