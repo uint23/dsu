@@ -1,0 +1,67 @@
+#include "gfx.h"
+
+#include <nds.h>
+
+#include "platform.h"
+
+void gfx_draw_px(int x, int y, u16 col)
+{
+	if ((unsigned)x < SCRW && (unsigned)y < SCRH)
+		VRAM_A[y * SCRW + x] = col;
+}
+
+void gfx_draw_line(int x0,int y0,int x1,int y1,u16 c)
+{
+    int dx = abs(x1-x0);
+	int	sx = x0<x1 ? 1 : -1;
+
+    int dy = -abs(y1-y0);
+	int	sy = y0<y1 ? 1 : -1;
+
+    int err = dx + dy;
+
+    for (;;) {
+        gfx_draw_px(x0, y0, c);
+
+        if (x0==x1 && y0==y1)
+			break;
+
+        int e2 = 2*err;
+        if (e2 >= dy) {
+			err += dy;
+			x0 += sx;
+		}
+
+        if (e2 <= dx) {
+			err += dx;
+			y0 += sy;
+		}
+    }
+}
+
+void gfx_draw_circle(int cx, int cy, int r, u16 col)
+{
+	int x = r;
+	int y = 0;
+
+	int err = 0;
+
+	while (x >= y) {
+		gfx_draw_px(cx + x, cy + y, col);
+		gfx_draw_px(cx + y, cy + x, col);
+		gfx_draw_px(cx - y, cy + x, col);
+		gfx_draw_px(cx - x, cy + y, col);
+		gfx_draw_px(cx - x, cy - y, col);
+		gfx_draw_px(cx - y, cy - x, col);
+		gfx_draw_px(cx + y, cy - x, col);
+		gfx_draw_px(cx + x, cy - y, col);
+
+		y++;
+		err += 1 + 2*y;
+		if (2*(err - x) + 1 > 0) {
+			x--;
+			err += 1 - 2*x;
+		}
+	}
+}
+
