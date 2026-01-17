@@ -12,4 +12,5 @@
 -I/opt/devkitpro/calico/include
 -I/opt/devkitpro/libnds/include
 -Iinclude
+-Ibuild
 -I/opt/devkitpro/devkitARM/arm-none-eabi/include

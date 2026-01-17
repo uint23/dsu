@@ -6,6 +6,8 @@
 #define SCRH    192
 #define FPS     60
 
+extern int bg_sub;
+
 void platform_init(void);
 
 #endif /* PLATFORM_H */

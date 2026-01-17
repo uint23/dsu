@@ -7,35 +7,26 @@
 	info
 */
 
-#include <math.h>
 #include <stdlib.h>
 
 #include <nds.h>
 
-#include "gfx.h"
+#include "clock.h"
 #include "input.h"
 #include "platform.h"
 #include "scene.h"
 
-/* scenes */
-#include "scenes/scene_example.h"
+#include "scenes/scene_play.h"
 
-/* prototypes */
-void run(void);
-void setup(void);
-
-/* variables */
+/* globals */
 struct input in;
 
-/* functions */
 void run(void)
 {
-	scene_set(&scene_example);
-	for (;;) {
+	while (pmMainLoop()) {
 		swiWaitForVBlank();
-
+		clock_tick();
 		input_poll();
-
 		scene_update();
 		scene_render();
 	}
@@ -43,8 +34,8 @@ void run(void)
 
 void setup(void)
 {
-	/* platform */
 	platform_init();
+	scene_set(&scene_play);
 }
 
 int main(void)
