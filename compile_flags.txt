@@ -1,0 +1,15 @@
+--target=arm-none-eabi
+-std=gnu11
+-DARM9
+-D__NDS__
+-O2
+-mcpu=arm946e-s
+-mthumb
+-fomit-frame-pointer
+-ffast-math
+-ffreestanding
+-fno-builtin
+-I/opt/devkitpro/calico/include
+-I/opt/devkitpro/libnds/include
+-Iinclude
+-I/opt/devkitpro/devkitARM/arm-none-eabi/include
