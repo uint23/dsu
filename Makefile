@@ -17,7 +17,7 @@ EMU ?= melonDS
 
 all: $(OUT)
 
-SRC = source/*.c
+SRC = source/*.c source/scenes/*.c
 
 build/arm9.elf: $(SRC) | build
 	$(CC) $(CFLAGS) $(SRC) $(LDFLAGS) -o $@

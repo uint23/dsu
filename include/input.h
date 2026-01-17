@@ -20,7 +20,9 @@ struct input {
 	u32           btn_up;
 };
 
-void input_poll(struct input* i);
+extern struct input in;
+
+void input_poll(void);
 
 #endif /* INPUT_H */
 

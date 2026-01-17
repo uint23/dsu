@@ -4,6 +4,11 @@
 
 #include "platform.h"
 
+void gfx_clear(u16 col)
+{
+	dmaFillHalfWords(col, VRAM_A, SCRW*SCRH*2);
+}
+
 void gfx_draw_px(int x, int y, u16 col)
 {
 	if ((unsigned)x < SCRW && (unsigned)y < SCRH)
