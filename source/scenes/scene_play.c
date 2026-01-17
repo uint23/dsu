@@ -11,6 +11,7 @@
 
 #include "bottom_grid.h"
 #include "circle.h"
+#include "cursor.h"
 
 #define PREEMPT_MS 800
 #define HIT_300_MS 40
@@ -36,6 +37,9 @@ static int cur_idx;
 static int flash;
 static int last_judge;
 static u32 loop_offset;
+
+static int prevx;
+static int prevy;
 
 #define FLASH_MAX    128
 #define FLASH_OUT    8    /* fade out speed */
@@ -174,13 +178,21 @@ static void render(void)
 		render_obj(&map[i], now);
 
 	/* cursor */
-	gfx_draw_circle(in.x, in.y, 10, RGB15(31, 31, 31), true);
+	
+	if (in.sty_held) {
+    	gfx_draw_sprite(in.x - 15, in.y - 15, 30, 30, cursorBitmap);
+		prevx = in.x - 15;
+		prevy = in.y - 15;
+	}
+	else {
+		gfx_draw_sprite(prevx, prevy, 30, 30, cursorBitmap);
+	}
 
 	/* inner-glow flash */
 	if (flash > 0) {
 		int r = (last_judge == 300) ? 0  : (last_judge == 100) ? 31 : (last_judge == 50) ? 31 : 31;
-		int g = (last_judge == 300) ? 31 : (last_judge == 100) ? 31 : (last_judge == 50) ? 15 : 0;
-		int b = 0;
+		int b = (last_judge == 300) ? 31 : (last_judge == 100) ? 31 : (last_judge == 50) ? 15 : 0;
+		int g = 0;
 
 		for (int d = 0; d < GLOW_DEPTH; d++) {
 			int alpha = (GLOW_DEPTH - d) * flash / (GLOW_DEPTH * FLASH_MAX / 31);

@@ -20,13 +20,13 @@ void gfx_load_sub(const void* data, int len)
 		n = 256 * 192;
 
 	for (int i = 0; i < n; i++)
-		dst[i] = src[i];
+		dst[i] = src[i] | BIT(15);
 }
 
 void gfx_draw_px(int x, int y, u16 col)
 {
 	if ((unsigned)x < SCRW && (unsigned)y < SCRH)
-		VRAM_A[y * SCRW + x] = col;
+		VRAM_A[y * SCRW + x] = col | BIT(15);
 }
 
 void gfx_draw_line(int x0, int y0, int x1, int y1, u16 c)

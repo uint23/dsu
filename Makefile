@@ -32,7 +32,7 @@ GFX_HDR  = $(patsubst data/%.png,build/%.h,$(GFX_PNG))
 all: $(OUT)
 
 build/%.s build/%.h: data/%.png data/%.grit | build
-	$(GRIT) $< -fts -o build/$* -gB16 -gb -gT! -m! -p!
+	$(GRIT) $< -fts -o build/$* -ff data/$*.grit
 
 build/%.o: build/%.s
 	$(AS) -o $@ $<
