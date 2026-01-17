@@ -3,6 +3,7 @@
 #include <nds.h>
 
 #include "clock.h"
+#include "config.h"
 #include "gfx.h"
 #include "input.h"
 #include "platform.h"
@@ -125,8 +126,20 @@ static void update(void)
 		break;
 	}
 
-	/* hit with A, B press */
-	if ((in.btn_down & (KEY_A | KEY_B)) && cur_idx < (int)MAP_LEN) {
+	/* hit detection */
+	int try_hit = 0;
+	if (g_config.touch_press) {
+		/* touch screen to hit */
+		if (in.sty_pressed)
+			try_hit = 1;
+	}
+	else {
+		/* press buttons to hit */
+		if (in.btn_down & g_config.hit_buttons)
+			try_hit = 1;
+	}
+
+	if (try_hit && cur_idx < (int)MAP_LEN) {
 		struct hitobj* o = &map[cur_idx];
 
 		u32 dt = (now > o->t_ms) ? (now - o->t_ms) : (o->t_ms - now);
@@ -178,14 +191,15 @@ static void render(void)
 		render_obj(&map[i], now);
 
 	/* cursor */
-	
-	if (in.sty_held) {
-    	gfx_draw_sprite(in.x - 15, in.y - 15, 30, 30, cursorBitmap);
-		prevx = in.x - 15;
-		prevy = in.y - 15;
-	}
-	else {
-		gfx_draw_sprite(prevx, prevy, 30, 30, cursorBitmap);
+	if (!g_config.bottom_display) {
+		if (in.sty_held) {
+			gfx_draw_sprite(in.x - 15, in.y - 15, 30, 30, cursorBitmap);
+			prevx = in.x - 15;
+			prevy = in.y - 15;
+		}
+		else {
+			gfx_draw_sprite(prevx, prevy, 30, 30, cursorBitmap);
+		}
 	}
 
 	/* inner-glow flash */

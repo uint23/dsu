@@ -12,6 +12,7 @@
 #include <nds.h>
 
 #include "clock.h"
+#include "config.h"
 #include "input.h"
 #include "platform.h"
 #include "scene.h"
@@ -34,6 +35,7 @@ void run(void)
 
 void setup(void)
 {
+	config_init();
 	platform_init();
 	scene_set(&scene_play);
 }
